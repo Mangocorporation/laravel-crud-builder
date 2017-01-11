@@ -13,7 +13,7 @@ class CrudBuilderServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../publish/mango.blade.php' => base_path('resources/views/layouts/mango.blade.php'),
+            __DIR__ . '/../../../publish/mango.blade.php' => base_path('resources/views/layouts/mango.blade.php'),
         ]);
 
     }

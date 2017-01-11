@@ -17,6 +17,7 @@ class CrudMakeCommand extends Command
 
     protected $crudName;
     protected $crudNameCap;
+    protected $crudNameCapSingular;
     protected $crudNameSingular;
     protected $crudNamePlural;
     protected $modelName;
@@ -58,14 +59,6 @@ class CrudMakeCommand extends Command
         'enum' => 'select',
         'hidden' => 'hidden'
     ];
-    protected $crudNameCapSingular;
-    private $crudBuilder;
-
-    public function __construct(CrudBuilder $crudBuilder)
-    {
-        parent::__construct();
-        $this->crudBuilder = $crudBuilder;
-    }
 
     public function handle()
     {
