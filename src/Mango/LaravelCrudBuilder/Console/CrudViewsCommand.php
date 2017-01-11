@@ -3,7 +3,7 @@
 use File;
 use Illuminate\Console\Command;
 
-class CrudMakeCommand extends Command
+class CrudViewsCommand extends Command
 {
     /**
      * The name and signature of the console command.

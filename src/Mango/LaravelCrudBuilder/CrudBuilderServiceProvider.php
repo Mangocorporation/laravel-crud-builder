@@ -6,7 +6,7 @@ class CrudBuilderServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->commands('Mango\LaravelCrudBuilder\Console\CrudMakeCommand');
+        $this->commands('Mango\LaravelCrudBuilder\Console\CrudViewsCommand');
     }
 
 
