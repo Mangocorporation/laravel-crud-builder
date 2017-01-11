@@ -1,0 +1,6 @@
+<div class="form-group">
+    <div class="input email">
+        {!! Form::label('%%name%%', '%%label%%:') !!}
+        {!! Form::email('%%name%%', null, ['class' => 'form-control']) !!}
+    </div>
+</div>

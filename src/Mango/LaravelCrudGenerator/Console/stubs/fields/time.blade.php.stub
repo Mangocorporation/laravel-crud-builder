@@ -1,0 +1,6 @@
+<div class="form-group">
+    <div class="input time">
+        {!! Form::label('%%name%%', '%%label%%:') !!}
+        {!! Form::time('%%name%%', null, ['class' => 'form-control']) !!}
+    </div>
+</div>

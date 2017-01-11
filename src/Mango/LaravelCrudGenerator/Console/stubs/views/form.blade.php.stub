@@ -1,0 +1,33 @@
+@extends('layouts.mango')
+
+@section('content')
+<div id="page-container" class="row">
+
+    <div id="page-content" class="col-sm-12">
+
+        <h2>%%crudNameCapSingular%% create</h2>
+
+        <div class="%%pluralVar%% form">
+
+            {!! Form::model($%%varNameSingular%%, ['method' => 'PATCH', 'route' => ['%%pluralVar%%.update', $%%varNameSingular%%->id]]) !!}
+
+            <fieldset>
+
+                %%fields%%
+
+
+                <div class="form-group">
+                    {!! Form::submit('Submit', ['class'=>'btn btn-large btn-primary']) !!}
+                </div>
+            </fieldset>
+
+            {!! Form::close() !!}
+        </div>
+
+    </div>
+    <!-- /.form -->
+
+</div>
+<!-- /#page-content .col-sm-12 -->
+
+@endsection

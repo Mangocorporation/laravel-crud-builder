@@ -1,0 +1,29 @@
+{
+    "name": "raulmangolin/laravel-crud-builder",
+    "description": "Laravel 5 CRUD builder inspired by CakePHP's bake.",
+    "keywords": [
+        "laravel",
+        "form",
+        "generator",
+        "auto",
+        "crud",
+        "views"
+    ],
+    "authors": [
+        {
+            "name": "Raul Mangolin",
+            "email": "eu@raulmangolin.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "laravelcollective/html": "5.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Mango\\LaravelCrudGenerator": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

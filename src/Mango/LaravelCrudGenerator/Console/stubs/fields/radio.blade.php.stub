@@ -1,0 +1,7 @@
+<div class="form-group">
+    <div class="input radio">
+        {!! Form::label('%%name%%', '%%label%%:') !!}<br>
+        True: {!! Form::radio('%%name%%', 1) !!} /
+        False: {!! Form::radio('%%name%%', 0) !!}
+    </div>
+</div>

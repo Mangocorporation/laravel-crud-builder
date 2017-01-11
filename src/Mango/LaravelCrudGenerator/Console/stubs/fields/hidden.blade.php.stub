@@ -1,0 +1,5 @@
+<div class="form-group">
+    <div class="input hiden">
+        {!! Form::hidden('%%name%%', %%value%%, ['class' => 'form-control']) !!}
+    </div>
+</div>

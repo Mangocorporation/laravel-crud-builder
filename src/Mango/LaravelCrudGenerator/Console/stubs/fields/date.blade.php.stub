@@ -1,0 +1,6 @@
+<div class="form-group">
+    <div class="input date">
+        {!! Form::label('%%name%%', '%%label%%:') !!}
+        {!! Form::date('%%name%%', null, ['class' => 'form-control']) !!}
+    </div>
+</div>

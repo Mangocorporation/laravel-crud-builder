@@ -1,0 +1,6 @@
+<div class="form-group">
+    <div class="select">
+        {!! Form::label('%%name%%', '%%label%%:') !!}
+        {!! Form::select('%%name%%', [], null, ['class' => 'form-control', 'placeholder' => 'Choose one']]) !!}
+    </div>
+</div>
