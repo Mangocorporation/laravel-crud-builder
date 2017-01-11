@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Mango\\LaravelCrudGenerator": "src/"
+            "Mango\\LaravelCrudBuilder": "src/"
         }
     },
     "minimum-stability": "dev",

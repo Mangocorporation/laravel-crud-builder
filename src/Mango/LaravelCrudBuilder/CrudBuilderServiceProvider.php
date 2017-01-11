@@ -20,6 +20,6 @@ class CrudBuilderServiceProvider extends ServiceProvider
 
     public function provides()
     {
-        return ['laravel-crud-generator'];
+        return ['laravel-crud-builder'];
     }
 }
