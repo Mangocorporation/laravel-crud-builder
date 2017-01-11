@@ -1,4 +1,4 @@
-<?php namespace Mango\LaravelCrudGenerator\Console;
+<?php namespace Mango\LaravelCrudBuilder\Console;
 
 use File;
 use Illuminate\Console\Command;
@@ -59,12 +59,12 @@ class CrudMakeCommand extends Command
         'hidden' => 'hidden'
     ];
     protected $crudNameCapSingular;
-    private $crudGenerator;
+    private $crudBuilder;
 
-    public function __construct(CrudGenerator $crudGenerator)
+    public function __construct(CrudBuilder $crudBuilder)
     {
         parent::__construct();
-        $this->crudGenerator = $crudGenerator;
+        $this->crudBuilder = $crudBuilder;
     }
 
     public function handle()

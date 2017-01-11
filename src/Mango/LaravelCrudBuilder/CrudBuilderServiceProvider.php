@@ -1,12 +1,12 @@
-<?php namespace Mango\LaravelCrudGenerator;
+<?php namespace Mango\LaravelCrudBuilder;
 
 use Illuminate\Support\ServiceProvider;
 
-class CrudGeneratorServiceProvider extends ServiceProvider
+class CrudBuilderServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->commands('Mango\LaravelCrudGenerator\Console\CrudMakeCommand');
+        $this->commands('Mango\LaravelCrudBuilder\Console\CrudMakeCommand');
     }
 
 

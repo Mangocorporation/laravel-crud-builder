@@ -19,7 +19,7 @@ After install, don't forget to add this lines in your `config/app.php`:
 ``` php
     'providers' => [
         // ...
-        Mango\LaravelCrudGenerator\CrudGeneratorServiceProvider::class,
+        Mango\LaravelCrudBuilder\CrudBuilderServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class, //You probably already have this installed to
     ]
 ```
