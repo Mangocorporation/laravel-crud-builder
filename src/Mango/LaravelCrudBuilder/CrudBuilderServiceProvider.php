@@ -2,8 +2,6 @@
 
 use Illuminate\Support\ServiceProvider;
 
-use File;
-
 class CrudBuilderServiceProvider extends ServiceProvider
 {
     public function register()

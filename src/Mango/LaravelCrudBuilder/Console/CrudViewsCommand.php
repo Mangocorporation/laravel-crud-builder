@@ -10,7 +10,7 @@ class CrudViewsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mango:view
+    protected $signature = 'mango:views
                             {model : The model name.}';
 
     protected $description = 'Create Views\'s CRUD';
@@ -23,6 +23,7 @@ class CrudViewsCommand extends Command
     protected $modelName;
     protected $viewName;
     protected $path;
+    protected $tableName;
 
     protected $modelFields = array();
     /**
@@ -60,14 +61,23 @@ class CrudViewsCommand extends Command
         'hidden' => 'hidden'
     ];
 
+    private $crudBuilder;
+
+    public function __construct(CrudBuilder $crudBuilder)
+    {
+        parent::__construct();
+        $this->crudBuilder = $crudBuilder;
+    }
+
     public function handle()
     {
         $this->setConfig();
 
         $this->getFields();
 
-        $this->mountViews();
+        $this->copyLayout();
 
+        $this->mountViews();
     }
 
     protected function setConfig()
@@ -121,65 +131,83 @@ class CrudViewsCommand extends Command
         return $data;
     }
 
+    protected function copyLayout()
+    {
+        $layout = $file = __DIR__ . '/../publish/mango.blade.php';
+        $newLayout = base_path('resources/views/layouts/mango.blade.php');
+
+        if (!File::isFile($newLayout)) {
+            if ($this->output->confirm('Do you want to add a Twitter Bootstrap layout?')) {
+                $this->crudBuilder->copyFile($layout, $newLayout);
+            }
+        }
+    }
+
     protected function mountViews()
     {
         if ($this->output->confirm('Generate index view?')) {
-            $this->createIndexView();
+            $this->buildIndexView();
         }
 
         if ($this->output->confirm('Generate create view?')) {
-            $this->createGenerateView();
+            $this->buildCreateView();
         }
 
         if ($this->output->confirm('Generate edit view?')) {
-            $this->createEditView();
+            $this->buildEditView();
         }
 
         if ($this->output->confirm('Generate show view?')) {
-            $this->createShowView();
+            $this->buildShowView();
         }
 
         $this->output->success("All views created at {$this->path}");
     }
 
-    protected function createShowView()
+    protected function buildIndexView()
     {
-        $fields = '';
+        $header = '';
+        $content = '';
+
         foreach ($this->modelFields as $f) {
-            $fields .= "<tr>\n";
-            $fields .= "<td><strong>{$f['name']}</strong></td>\n";
-            $fields .= '<td>{{$' . $this->crudNameSingular . '->' . $f['name'] . '}}</td>'. "\n";
-            $fields .= "</tr>\n";
+            $header .= "<th>{$f['name']}</th>\n";
+            $content .= '<td>{{$' . $this->crudNameSingular . '->' . $f['name'] . '}}</td>' . "\n";
         }
 
-        $view = $this->stubs()['show'];
+        $this->buildIndexViewFile($header, $content);
+    }
 
-        $newFile = $this->path . 'show.blade.php';
-        if (!File::copy($view, $newFile)) {
+    protected function buildIndexViewFile($header, $content)
+    {
+        $view = $this->stubs()['index'];
+        $newFile = $this->path . 'index.blade.php';
+        if ($this->crudBuilder->copyFile($view, $newFile)) {
             $this->output->error("failed to copy {$view}");
         } else {
-            File::put($newFile, str_replace('%%pluralVar%%', $this->crudNamePlural, File::get($newFile)));
-            File::put($newFile, str_replace('%%fields%%', $fields, File::get($newFile)));
+            $vars = array('%%varName%%', '%%pluralVar%%', '%%varNameSingular%%', '%%fieldsTitle%%', '%%fieldsColumn%%');
+            $contents = array($this->crudNamePlural, $this->crudNamePlural, $this->crudNameSingular, $header, $content);
+            $this->crudBuilder->replaceVars($vars, $contents, $newFile);
         }
     }
 
-    protected function createCreateView()
+    protected function stubs()
+    {
+        return array(
+            'edit' => __DIR__ . '/stubs/views/form.blade.php.stub',
+            'create' => __DIR__ . '/stubs/views/create.blade.php.stub',
+            'index' => __DIR__ . '/stubs/views/index.blade.php.stub',
+            'show' => __DIR__ . '/stubs/views/show.blade.php.stub',
+        );
+    }
+
+    protected function buildCreateView()
     {
         $fields = '';
         foreach ($this->modelFields as $f) {
             $fields .= $this->mountField($f['html'], $f['name']);
         }
 
-        $view = $this->stubs()['create'];
-
-        $newFile = $this->path . 'create.blade.php';
-        if (!File::copy($view, $newFile)) {
-            $this->output->error("failed to copy {$view}");
-        } else {
-            File::put($newFile, str_replace('%%pluralVar%%', $this->crudNamePlural, File::get($newFile)));
-            File::put($newFile, str_replace('%%crudNameCapSingular%%', $this->crudNameCapSingular, File::get($newFile)));
-            File::put($newFile, str_replace('%%fields%%', $fields, File::get($newFile)));
-        }
+        $this->buildCreateViewFile($fields);
     }
 
     private function mountField($type, $name, $pk = false)
@@ -200,65 +228,71 @@ class CrudViewsCommand extends Command
         return $string;
     }
 
-    protected function stubs()
+    protected function buildCreateViewFile($fields)
     {
-        return array(
-            'edit' => __DIR__ . '/stubs/views/form.blade.php.stub',
-            'create' => __DIR__ . '/stubs/views/create.blade.php.stub',
-            'index' => __DIR__ . '/stubs/views/index.blade.php.stub',
-            'show' => __DIR__ . '/stubs/views/show.blade.php.stub',
-        );
+        $view = $this->stubs()['create'];
+        $newFile = $this->path . 'create.blade.php';
+        if ($this->crudBuilder->copyFile($view, $newFile)) {
+            $this->output->error("failed to copy {$view}");
+        } else {
+            $vars = array('%%pluralVar%%', '%%crudNameCapSingular%%', '%%fields%%');
+            $contents = array($this->crudNamePlural, $this->crudNameCapSingular, $fields);
+            $this->crudBuilder->replaceVars($vars, $contents, $newFile);
+        }
     }
 
-    protected function createEditView()
+    protected function buildEditView()
     {
         $fields = '';
         foreach ($this->modelFields as $f) {
             $fields .= $this->mountField($f['html'], $f['name'], '$' . $this->crudNamePlural . '->' . $f['name'] . '', $f['pk']);
         }
 
-        $view = $this->stubs()['edit'];
+        $this->buildEditViewFile($fields);
+    }
 
+    protected function buildEditViewFile($fields)
+    {
+        $view = $this->stubs()['edit'];
         $newFile = $this->path . 'edit.blade.php';
-        if (!File::copy($view, $newFile)) {
+        if ($this->crudBuilder->copyFile($view, $newFile)) {
             $this->output->error("failed to copy {$view}");
         } else {
-            File::put($newFile, str_replace('%%pluralVar%%', $this->crudNamePlural, File::get($newFile)));
-            File::put($newFile, str_replace('%%varNameSingular%%', $this->crudNameSingular, File::get($newFile)));
-            File::put($newFile, str_replace('%%crudNameCapSingular%%', $this->crudNameCapSingular, File::get($newFile)));
-            File::put($newFile, str_replace('%%fields%%', $fields, File::get($newFile)));
+            $vars = array('%%pluralVar%%', '%%varNameSingular%%', '%%crudNameCapSingular%%', '%%fields%%');
+            $contents = array($this->crudNamePlural, $this->crudNameSingular, $this->crudNameCapSingular, $fields);
+            $this->crudBuilder->replaceVars($vars, $contents, $newFile);
         }
     }
 
-    protected function createIndexView()
+    protected function buildShowView()
     {
-        $header = '';
-        $content = '';
-
+        $fields = '';
         foreach ($this->modelFields as $f) {
-            $header .= "<th>{$f['name']}</th>\n";
-            $content .= '<td>{{$' . $this->crudNameSingular . '->' . $f['name'] . '}}</td>' . "\n";
+            $fields .= "<tr>\n";
+            $fields .= "<td><strong>{$f['name']}</strong></td>\n";
+            $fields .= '<td>{{$' . $this->crudNameSingular . '->' . $f['name'] . '}}</td>' . "\n";
+            $fields .= "</tr>\n";
         }
 
-        $view = $this->stubs()['index'];
+        $this->buildShowViewFile($fields);
+    }
 
-        $newFile = $this->path . 'index.blade.php';
-        if (!File::copy($view, $newFile)) {
+    protected function buildShowViewFile($fields)
+    {
+        $view = $this->stubs()['show'];
+        $newFile = $this->path . 'show.blade.php';
+        if ($this->crudBuilder->copyFile($view, $newFile)) {
             $this->output->error("failed to copy {$view}");
         } else {
-            File::put($newFile, str_replace('%%varName%%', $this->crudNamePlural, File::get($newFile)));
-            File::put($newFile, str_replace('%%pluralVar%%', $this->crudNamePlural, File::get($newFile)));
-            File::put($newFile, str_replace('%%varNameSingular%%', $this->crudNameSingular, File::get($newFile)));
-            File::put($newFile, str_replace('%%fieldsTitle%%', $header, File::get($newFile)));
-            File::put($newFile, str_replace('%%fieldsColumn%%', $content, File::get($newFile)));
+            $vars = array('%%pluralVar%%', '%%fields%%');
+            $contents = array($this->crudNamePlural, $fields);
+            $this->crudBuilder->replaceVars($vars, $contents, $newFile);
         }
     }
 
     protected function getArguments()
     {
-        return array(
-            array('model', InputArgument::REQUIRED, 'Model name')
-        );
+        return array(array('model', InputArgument::REQUIRED, 'Model name'));
     }
 
     protected function getNameInput()

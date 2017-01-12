@@ -23,6 +23,14 @@ class CrudControllersCommand extends Command
 
     protected $path;
 
+    private $crudBuilder;
+
+    public function __construct(CrudBuilder $crudBuilder)
+    {
+        parent::__construct();
+        $this->crudBuilder = $crudBuilder;
+    }
+
     public function handle()
     {
         $this->setConfig();
@@ -58,7 +66,7 @@ class CrudControllersCommand extends Command
         $file = __DIR__ . '/stubs/controllers/controller.php.stub';
         $newFile = $this->path;
 
-        if (!File::copy($file, $newFile)) {
+        if ($this->crudBuilder->copyFile($file, $newFile)) {
             $this->output->error("failed to create {$file}");
             die;
         }
@@ -66,13 +74,17 @@ class CrudControllersCommand extends Command
 
     protected function replaceVars()
     {
-        File::put($this->path, str_replace('%%openPHP%%', '<?php', File::get($this->path)));
-        File::put($this->path, str_replace('%%modelName%%', $this->modelName, File::get($this->path)));
-        File::put($this->path, str_replace('%%controllerName%%', $this->controllerName, File::get($this->path)));
-        File::put($this->path, str_replace('%%controllerNameLower%%', $this->controllerNameLower, File::get($this->path)));
-        File::put($this->path, str_replace('%%varNamePlural%%', $this->varNamePlural, File::get($this->path)));
-        File::put($this->path, str_replace('%%varNameSingular%%', $this->varNameSingular, File::get($this->path)));
+        $vars = array('%%openPHP%%', '%%modelName%%', '%%controllerName%%', '%%controllerNameLower%%',
+            '%%varNamePlural%%', '%%varNameSingular%%');
+
+        $contents = array('<?php', $this->modelName, $this->controllerName, $this->controllerNameLower,
+            $this->varNamePlural, $this->varNameSingular);
+
+        $this->crudBuilder->replaceVars($vars, $contents, $this->path);
     }
 
-
+    protected function getArguments()
+    {
+        return array(array('model', InputArgument::REQUIRED, 'Model name'));
+    }
 }
