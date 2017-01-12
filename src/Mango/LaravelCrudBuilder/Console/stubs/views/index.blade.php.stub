@@ -7,7 +7,7 @@
 
         <div class="%%pluralVar%% index">
 
-            <a href="{{ url('/%%pluralVar%%/create') }}" class="btn btn-primary btn-add" title="Add New">Add new</a>
+            <a href="{{ url('/%%pluralVar%%/create') }}" class="btn btn-success btn-add" title="Add New">Add new</a>
 
             <h2>%%pluralVar%% index</h2>
 
@@ -25,6 +25,7 @@
                         %%fieldsColumn%%
                         <td class="actions">
                             {!! Form::open(array('class' => 'form-inline', 'method' => 'DELETE', 'route' => array('%%pluralVar%%.destroy', $%%varNameSingular%%->id))) !!}
+                                {!! link_to_route('%%pluralVar%%.show', 'Show', array($%%varNameSingular%%->id), array('class' => 'btn btn-info btn-xs')) !!}
                                 {!! link_to_route('%%pluralVar%%.edit', 'Edit', array($%%varNameSingular%%->id), array('class' => 'btn btn-warning btn-xs')) !!}
                                 {!! Form::submit('Remove', array('class' => 'btn btn-danger btn-xs')) !!}
                             {!! Form::close() !!}

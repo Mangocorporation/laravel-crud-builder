@@ -10,10 +10,10 @@ class CrudViewsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mango:views
-                            {model : The model name. (plural)}';
+    protected $signature = 'mango:view
+                            {model : The model name.}';
 
-    protected $description = 'Create CRUD views';
+    protected $description = 'Create Views\'s CRUD';
 
     protected $crudName;
     protected $crudNameCap;
@@ -81,7 +81,7 @@ class CrudViewsCommand extends Command
         $this->viewName = snake_case($this->argument('model'), '-');
         $this->tableName = snake_case($this->argument('model'), '-');
 
-        $this->path = config('view.paths')[0] . '/' . $this->viewName . '/';
+        $this->path = config('view.paths')[0] . '/' . str_plural($this->viewName) . '/';
 
         if (!File::isDirectory($this->path)) {
             File::makeDirectory($this->path, 0755, true);
