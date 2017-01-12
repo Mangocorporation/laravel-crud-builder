@@ -9,7 +9,7 @@ CRUD builder inspired by CakePHP's bake. With this component you can create simp
 
 All views are in Twitter Bootstrap scheme to make life easier for everyone. 
 
-###Installation
+### Installation
 
 ```
 composer require raulmangolin/laravel-crud-builder
