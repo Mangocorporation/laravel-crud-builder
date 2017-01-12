@@ -123,20 +123,20 @@ class CrudViewsCommand extends Command
 
     protected function mountViews()
     {
-        if ($this->output->confirm('Create index view?')) {
+        if ($this->output->confirm('Generate index view?')) {
             $this->createIndexView();
         }
 
-        if ($this->output->confirm('Create show view?')) {
-            $this->createShowView();
+        if ($this->output->confirm('Generate create view?')) {
+            $this->createGenerateView();
         }
 
-        if ($this->output->confirm('Create edit view?')) {
+        if ($this->output->confirm('Generate edit view?')) {
             $this->createEditView();
         }
 
-        if ($this->output->confirm('Create create view?')) {
-            $this->createCreateView();
+        if ($this->output->confirm('Generate show view?')) {
+            $this->createShowView();
         }
 
         $this->output->success("All views created at {$this->path}");

@@ -28,6 +28,8 @@ class CrudControllersCommand extends Command
         $this->setConfig();
 
         $this->replaceVars();
+
+        $this->output->success("Your {$this->controllerName} controller is created at {$this->path}");
     }
 
     protected function setConfig()
