@@ -1,10 +1,11 @@
 # Laravel 5 CRUD Builder
 
+[![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 [![Build Status](https://travis-ci.org/raulmangolin/laravel-crud-builder.svg?branch=master)](https://travis-ci.org/raulmangolin/laravel-crud-builder)
 [![Total Downloads](https://img.shields.io/packagist/dt/raulmangolin/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/raulmangolin/laravel-crud-builder)
 [![Latest Stable Version](https://img.shields.io/packagist/v/raulmangolin/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/raulmangolin/laravel-crud-builder)
 
-CRUD builder inspired by CakePHP's bake. With this component you can create simple admin views to start your code faster. 
+CRUD builder inspired by CakePHP's bake. With this component you can create simple admin views and controller to start your project faster. 
 
 All views are in Twitter Bootstrap scheme to make life easier for everyone. 
 
@@ -29,38 +30,50 @@ And the alias from [The Laravel Collective](https://github.com/laravelcollective
     'aliases' => [
         // ...
         'Form' => Collective\Html\FormFacade::class, //You probably already have this installed to
-        'Html' => Collective\Html\HtmlFacade::class, //You probably already have this installed to
     ]
 ```
 
 ### How do I do this magic?
+In this example below we will imagine that you have a model named **User** and will work with it.
 
-If you want to create admin views to **User model**, in your terminal just run this command:
+It' simple, just run this commands in your terminal:
+
+#### Make Controller
+```
+    php artisan mango:controller User
+```
+
+This will create the `UsersController.php` file in the appropriate location with the following methods:
+* index
+* create
+* edit
+* show
+
+
+#### Make Views
 
 ```
-    php artisan mango:views Users
+    php artisan mango:views User
 ```
 
 After that you will receive 4 questions:
 
-* Create index view? (yes/no):
-* Create show view? (yes/no):
-* Create edit view? (yes/no):
-* Create create view? (yes/no):
+* Generate index view? (yes/no):
+* Generate create view? (yes/no):
+* Generate edit view? (yes/no):
+* Generate show view? (yes/no):
 
 Just answer this questions and be happy!
 
 ### Do I need to do anything else?
 
-Maybe. :)
+Maybe. :) If you already have a controller ready, you may need to change some things.
 
 All views are based in your Model name, because of this they use variables like `$users` and `$user`.
 
 If your index method in your UsersController return all data like `return view('users.index', compact('users'))` it will work fine.
 
-Otherwise you can change this variables in your views or controller.
-
-The next version will come with a controller builder to make it easier.
+Otherwise you can change this variables names in your views or controller.
 
 ### Twitter Bootstrap layout
 When you install this component, we add a bootstrap based layout (`mango.blade.php`) in your `views/layout`. 
