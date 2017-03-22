@@ -1,7 +1,7 @@
 # Laravel 5 CRUD Builder
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
-[![Build Status](https://travis-ci.org/mangocorporation/laravel-crud-builder.svg?branch=master)](https://travis-ci.org/mangocorporation/laravel-crud-builder)
+[![Build Status](https://travis-ci.org/Mangocorporation/laravel-crud-builder.svg?branch=master)](https://travis-ci.org/Mangocorporation/laravel-crud-builder)
 [![Total Downloads](https://img.shields.io/packagist/dt/mangocorporation/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/mangocorporation/laravel-crud-builder)
 [![Latest Stable Version](https://img.shields.io/packagist/v/mangocorporation/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/mangocorporation/laravel-crud-builder)
 
