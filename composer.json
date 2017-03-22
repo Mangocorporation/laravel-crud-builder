@@ -1,6 +1,7 @@
 {
-    "name": "raulmangolin/laravel-crud-builder",
+    "name": "mangocorporation/laravel-crud-builder",
     "description": "Laravel 5 CRUD builder inspired by CakePHP's bake.",
+    "homepage": "https://mangocorporation.github.io/laravel-crud-builder/",
     "keywords": [
         "laravel",
         "form",
