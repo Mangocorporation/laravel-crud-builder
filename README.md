@@ -1,9 +1,9 @@
 # Laravel 5 CRUD Builder
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
-[![Build Status](https://travis-ci.org/raulmangolin/laravel-crud-builder.svg?branch=master)](https://travis-ci.org/raulmangolin/laravel-crud-builder)
-[![Total Downloads](https://img.shields.io/packagist/dt/raulmangolin/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/raulmangolin/laravel-crud-builder)
-[![Latest Stable Version](https://img.shields.io/packagist/v/raulmangolin/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/raulmangolin/laravel-crud-builder)
+[![Build Status](https://travis-ci.org/mangocorporation/laravel-crud-builder.svg?branch=master)](https://travis-ci.org/mangocorporation/laravel-crud-builder)
+[![Total Downloads](https://img.shields.io/packagist/dt/mangocorporation/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/mangocorporation/laravel-crud-builder)
+[![Latest Stable Version](https://img.shields.io/packagist/v/mangocorporation/laravel-crud-builder.svg?style=flat)](https://packagist.org/packages/mangocorporation/laravel-crud-builder)
 
 CRUD builder inspired by CakePHP's bake. With this component you can create simple admin views and controller to start your project faster. 
 
@@ -12,7 +12,7 @@ All views are in Twitter Bootstrap scheme to make life easier for everyone.
 ### Installation
 
 ```
-composer require raulmangolin/laravel-crud-builder
+composer require mangocorporation/laravel-crud-builder
 ```
 
 After install, don't forget to add this lines in your `config/app.php`:
